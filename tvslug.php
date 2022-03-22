@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slug module ”Nic”
  *
@@ -7,6 +6,7 @@
  * @copyright 2018 - 2022 © tivuno.com
  * @license   Basic license | You are allowed to use the software on one productive environment
  */
+
 require_once _PS_MODULE_DIR_ . 'tvslug/models/Slug.php';
 class Tvslug extends Module
 {
@@ -15,7 +15,7 @@ class Tvslug extends Module
     {
         $this->name = 'tvslug';
         $this->tab = 'administration';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'tivuno.com';
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
         $this->bootstrap = true;

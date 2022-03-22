@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slug module ”Nic”
  *
@@ -7,6 +6,7 @@
  * @copyright 2018 - 2022 © tivuno.com
  * @license   Basic license | You are allowed to use the software on one productive environment
  */
+
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slug module ”Nic”
  *
@@ -7,6 +6,7 @@
  * @copyright 2018 - 2022 © tivuno.com
  * @license   Basic license | You are allowed to use the software on one productive environment
  */
+
 class Category extends CategoryCore
 {
     public function add($autodate = true, $null_values = false)
