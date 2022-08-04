@@ -2,9 +2,9 @@
 /**
  * Slug module ”Nic”
  *
- * @author    tivuno prestashop specialists
- * @copyright 2018 - 2022 © tivuno.com
- * @license   Basic license | You are allowed to use the software on one productive environment
+ * @author    Konstantinos A. Kogkalidis
+ * @copyright 2018 - 2022 © tivuno PrestaShop specialists
+ * @license   Basic license | One license per (sub)domain
  */
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

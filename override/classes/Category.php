@@ -2,22 +2,22 @@
 /**
  * Slug module ”Nic”
  *
- * @author    tivuno prestashop specialists
- * @copyright 2018 - 2022 © tivuno.com
- * @license   Basic license | You are allowed to use the software on one productive environment
+ * @author    Konstantinos A. Kogkalidis
+ * @copyright 2018 - 2022 © tivuno PrestaShop specialists
+ * @license   Basic license | One license per (sub)domain
  */
 
 class Category extends CategoryCore
 {
-    public function add($autodate = true, $null_values = false)
+    public function add($autoDate = true, $nullValues = false)
     {
-        parent::add($autodate, $null_values);
+        parent::add($autoDate, $nullValues);
         Hook::exec('actionCategorySave', ['category' => $this]);
     }
-
-    public function update($null_values = false)
+    
+    public function update($nullValues = false)
     {
-        parent::update($null_values);
+        parent::update($nullValues);
         Hook::exec('actionCategorySave', ['category' => $this]);
     }
 }
