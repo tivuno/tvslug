@@ -72,12 +72,12 @@ class Slug
             $c0 = mb_substr($in, $i, 1);
             $c1 = mb_substr($in, $i + 1, 1);
             $c2 = mb_substr($in, $i + 2, 1);
-            # μπ as b rule
             if (mb_strtolower($c0 . $c1) == 'μπ' && (mb_ereg('^\W$|^_$|^$', $cm) || mb_ereg('^\W$|^_$|^$', $c2))) {
+                # μπ as b rule
                 $out .= mb_strtoupper($c0) == $c0 ? mb_strtoupper('b') : 'b';
                 $i += 2;
-            } # diphthong υ rule
-            elseif (in_array(mb_strtolower($c0), $diph_aei) && in_array(mb_strtolower($c1), $diph_yps)) {
+            } elseif (in_array(mb_strtolower($c0), $diph_aei) && in_array(mb_strtolower($c1), $diph_yps)) {
+                # diphthong υ rule
                 $t = $singles[mb_strtolower($c0)];
                 $out .= mb_strtoupper($c0) == $c0 ? mb_strtoupper(mb_substr($t, 0, 1)) : mb_substr($t, 0, 1);
                 if (in_array(mb_strtolower($c2), $diph_vita)) {
@@ -86,27 +86,27 @@ class Slug
                     $out .= mb_strtoupper($c1) == $c1 ? mb_strtoupper('f') : 'f';
                 }
                 $i += 2;
-            } # diphthongs rule
-            elseif (array_key_exists(mb_strtolower($c0 . $c1), $diphthongs)) {
+            } elseif (array_key_exists(mb_strtolower($c0 . $c1), $diphthongs)) {
+                # diphthongs rule
                 $t = $diphthongs[mb_strtolower($c0 . $c1)];
                 $out .= mb_strtoupper($c0) == $c0 ? mb_strtoupper(mb_substr($t, 0, 1)) : mb_substr($t, 0, 1);
                 $t = mb_substr($t, 1);
                 $out .= mb_strtoupper($c1) == $c1 ? mb_strtoupper($t) : $t;
                 $i += 2;
-            } # doubles rule
-            elseif (array_key_exists(mb_strtolower($c0), $doubles)) {
+            } elseif (array_key_exists(mb_strtolower($c0), $doubles)) {
+                # doubles rule
                 $t = $doubles[mb_strtolower($c0)];
                 $out .= mb_strtoupper($c0) == $c0 ? mb_strtoupper(mb_substr($t, 0, 1)) : mb_substr($t, 0, 1);
                 $t = mb_substr($t, 1);
                 $out .= mb_strtoupper($c0 . $c1) == $c0 . $c1 ? mb_strtoupper($t) : $t;
                 $i += 1;
-            } # single rule
-            elseif (array_key_exists(mb_strtolower($c0), $singles)) {
+            } elseif (array_key_exists(mb_strtolower($c0), $singles)) {
+                # single rule
                 $t = $singles[mb_strtolower($c0)];
                 $out .= mb_strtoupper($c0) == $c0 ? mb_strtoupper($t) : $t;
                 $i += 1;
-            } # no rule
-            else {
+            } else {
+                # no rule
                 $out .= $c0;
                 $i += 1;
             }
