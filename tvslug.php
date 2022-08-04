@@ -7,15 +7,18 @@
  * @license   Basic license | One license per (sub)domain
  */
 
+require_once _PS_MODULE_DIR_ . 'tvimport/tvimport.php';
 require_once _PS_MODULE_DIR_ . 'tvslug/models/Slug.php';
 
 class Tvslug extends Module
 {
+    public static bool $executed = false;
+    
     public function __construct()
     {
         $this->name = 'tvslug';
         $this->tab = 'administration';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
         $this->author = 'tivuno.com';
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
         $this->bootstrap = true;
@@ -31,7 +34,7 @@ class Tvslug extends Module
     
     private function registerHooks(): bool
     {
-        $hooks = ["actionCategorySave", "actionProductSave"];
+        $hooks = ["actionCategoryAdd", "actionCategoryUpdate", "actionProductSave"];
         foreach ($hooks as $hook) {
             $this->registerHook($hook);
         }
@@ -39,23 +42,43 @@ class Tvslug extends Module
         return true;
     }
     
-    public function hookActionCategorySave($params)
+    public function hookActionCategoryAdd($params)
     {
-        foreach ($params['category']->name as $language_id => $name) {
-            if (key_exists($language_id, $params['category']->link_rewrite)) {
-                $params['category']->link_rewrite[$language_id] = Slug::convert($name);
+        $this->hookActionCategoryUpdate($params);
+    }
+    
+    public function hookActionCategoryUpdate($params)
+    {
+        $executed = self::$executed;
+        if ($executed) {
+            return;
+        }
+        
+        self::$executed = true;
+        $category = $params['category'];
+        $submitted_name = Tools::getValue('category')['name'];
+        foreach ($submitted_name as $language_id => $name) {
+            if (array_key_exists($language_id, $category->link_rewrite)) {
+                $category->link_rewrite[$language_id] = pSQL(Slug::convert($name));
             }
         }
-        $params['category']->save();
+        $category->update();
     }
     
     public function hookActionProductSave($params)
     {
-        foreach ($params['product']->name as $language_id => $name) {
-            if (array_key_exists($language_id, $params['product']->link_rewrite)) {
-                $params['product']->link_rewrite[$language_id] = Slug::convert($name);
+        $executed = self::$executed;
+        if ($executed) {
+            return;
+        }
+        
+        self::$executed = true;
+        $product = $params['product'];
+        foreach ($product->name as $language_id => $name) {
+            if (array_key_exists($language_id, $product->link_rewrite)) {
+                $product->link_rewrite[$language_id] = pSQL(Slug::convert($name));
             }
         }
-        $params['product']->save();
+        $product->save();
     }
 }

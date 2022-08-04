@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>tvslug</name>
+    <displayName><![CDATA[Greeklish slug]]></displayName>
+    <version><![CDATA[1.0.3]]></version>
+    <description><![CDATA[It creates greeklish slugs for the content in your project.]]></description>
+    <author><![CDATA[tivuno.com]]></author>
+    <tab><![CDATA[administration]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>
