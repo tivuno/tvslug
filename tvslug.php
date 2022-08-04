@@ -7,7 +7,6 @@
  * @license   Basic license | One license per (sub)domain
  */
 
-require_once _PS_MODULE_DIR_ . 'tvimport/tvimport.php';
 require_once _PS_MODULE_DIR_ . 'tvslug/models/Slug.php';
 
 class Tvslug extends Module
