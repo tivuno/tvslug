@@ -13,7 +13,8 @@ class Slug
     {
         $string = mb_strtolower(urldecode($string), 'UTF-8');
         // Many spaces to one & space to dash conversion
-        $string = preg_replace('!\s+!', ' ', str_replace(' ', '-', $string));
+        $string = preg_replace('!\s+!', ' ', $string);
+        $string = str_replace(' ', '-', $string);
         return $string;
     }
 
