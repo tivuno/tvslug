@@ -12,12 +12,12 @@ require_once _PS_MODULE_DIR_ . 'tvslug/models/Slug.php';
 class Tvslug extends Module
 {
     public static bool $executed = false;
-    
+
     public function __construct()
     {
         $this->name = 'tvslug';
         $this->tab = 'administration';
-        $this->version = '1.0.3';
+        $this->version = '1.0.4';
         $this->author = 'tivuno.com';
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
         $this->bootstrap = true;
@@ -25,34 +25,34 @@ class Tvslug extends Module
         $this->description = $this->l('It creates greeklish slugs for the content in your project.');
         parent::__construct();
     }
-    
+
     public function install(): bool
     {
         return parent::install() && $this->registerHooks();
     }
-    
+
     private function registerHooks(): bool
     {
         $hooks = ["actionCategoryAdd", "actionCategoryUpdate", "actionProductSave"];
         foreach ($hooks as $hook) {
             $this->registerHook($hook);
         }
-        
+
         return true;
     }
-    
+
     public function hookActionCategoryAdd($params)
     {
         $this->hookActionCategoryUpdate($params);
     }
-    
+
     public function hookActionCategoryUpdate($params)
     {
         $executed = self::$executed;
         if ($executed) {
             return;
         }
-        
+
         self::$executed = true;
         $category = $params['category'];
         $submitted_name = Tools::getValue('category')['name'];
@@ -63,14 +63,14 @@ class Tvslug extends Module
         }
         $category->update();
     }
-    
+
     public function hookActionProductSave($params)
     {
         $executed = self::$executed;
         if ($executed) {
             return;
         }
-        
+
         self::$executed = true;
         $product = $params['product'];
         foreach ($product->name as $language_id => $name) {
@@ -79,5 +79,38 @@ class Tvslug extends Module
             }
         }
         $product->save();
+    }
+
+    public function hookDisplayImportCreationLanguageExtraFields()
+    {
+        return [ # One language per line?
+            [
+                'type' => 'radio',
+                'label' => $this->l('Do you need the slug to be converted to greeklish?'),
+                'name' => 'language_slug',
+                'values' => [
+                    [
+                        'id' => 0,
+                        'value' => 0,
+                        'label' => $this->l('No conversion, every name is in plain english')
+                    ],
+                    [
+                        'id' => 1,
+                        'value' => 1,
+                        'label' => $this->l('Basic conversion from modern greek')
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 2,
+                        'label' => $this->l('Advanced conversion from ancient greek')
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public function hookActionAddImportLanguageSettings()
+    {
+        return ['slug'];
     }
 }

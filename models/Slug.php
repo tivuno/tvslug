@@ -9,60 +9,84 @@
 
 class Slug
 {
-    /**
-     * It converts slug to latin characters based on non latin string
-     *
-     * @param string $string
-     * @return string
-     */
-    public static function convert(string $string): string
+    public static function initConversion($string): string
     {
         $string = mb_strtolower(urldecode($string), 'UTF-8');
-        // Many spaces to one
-        $string = preg_replace('!\s+!', ' ', $string);
-        // We convert poly-tonic to modern greek
-        $string = self::toModern($string);
-        $string = self::toGreeklish($string);
-        $string = str_replace(' ', '-', $string);
-        $string = preg_replace("/[^a-z0-9-\s]+/i", "", $string);
-        
+        // Many spaces to one & space to dash conversion
+        $string = preg_replace('!\s+!', ' ', str_replace(' ', '-', $string));
         return $string;
     }
-    
+
     /**
-     * It converts string from ancient to modern greek
+     * It converts greeklish slug from ancient greek
      *
      * @param string $string
      * @return string
      */
-    public static function toModern(string $string): string
+    public static function fromAncient(string $string): string
     {
+        // We convert poly-tonic to modern greek
+        $string = self::initConversion($string);
         $expressions = [
-            '/[ἀἁἂἃἄἅἆἇὰάᾀᾁᾂᾃᾄᾅᾆᾇᾰᾱᾲᾳᾴᾶᾷ]/u' => 'α', '/[ἐἑἒἓἔἕὲέ]/u' => 'ε', '/[ἠἡἢἣἤἥἦἧὴήᾐᾑᾒᾓᾔᾕᾖᾗῂῃῄῆῇ]/u' => 'η',
-            '/[ϊἰἱἲἳἴἵἶἷὶίῐῑῒΐῖῗ]/u' => 'ι', '/[ὀὁὂὃὄὅὸό]/u' => 'ο', '/[ϋὐὑὒὓὔὕὖὗὺύῠῡῢΰῦῧ]/u' => 'υ',
-            '/[ὠὡὢὣὤὥὦὧὼώᾠᾡᾢᾣᾤᾥᾦᾧῲῳῴῶῷ]/u' => 'ω'
+            '/[ἀἁἂἃἄἅἆἇὰᾀᾁᾂᾃᾄᾅᾆᾇᾰᾱᾲᾳᾴᾶᾷ]/u' => 'α',
+            '/[ἐἑἒἓἔἕὲ]/u' => 'ε',
+            '/[ἠἡἢἣἤἥἦἧὴᾐᾑᾒᾓᾔᾕᾖᾗῂῃῄῆῇ]/u' => 'η',
+            '/[ἰἱἲἳἴἵἶἷὶῐῑῒῖῗ]/u' => 'ι',
+            '/[ὀὁὂὃὄὅὸ]/u' => 'ο',
+            '/[ὐὑὒὓὔὕὖὗὺῠῡῢῦῧ]/u' => 'υ',
+            '/[ὠὡὢὣὤὥὦὧὼᾠᾡᾢᾣᾤᾥᾦᾧῲῳῴῶῷ]/u' => 'ω',
         ];
-        preg_replace(array_keys($expressions), array_values($expressions), $string);
-        
+        $string = preg_replace(array_keys($expressions), array_values($expressions), $string);
+        $string = self::toSlug($string, false);
         return $string;
     }
-    
-    public static function toGreeklish(string $string): string
+
+    /**
+     * It converts greeklish slug from modern greek
+     *
+     * @param string $in
+     * @param boolean $init Set to false when converting from ancient, in order to avoid double execution
+     * @return string
+     */
+    public static function toSlug(string $in, bool $init = true): string
     {
-        $in = urldecode($string);
+        if ($init) {
+            $in = self::initConversion($in);
+        }
         $diph_aei = ['α', 'ε', 'η'];
         $diph_yps = ['υ', 'ύ'];
         $diph_vita = [
-            'α', 'ά', 'ε', 'έ', 'η', 'ή', 'ο', 'ό', 'ω', 'ώ', 'ι', 'ί', 'ϊ', 'ΐ', 'υ', 'ύ', 'ϋ', 'ΰ', 'β', 'γ', 'δ',
-            'ζ', 'λ', 'μ', 'ν', 'ρ'
+            'α', 'ά', 'ε', 'έ', 'η', 'ή', 'ο', 'ό', 'ω', 'ώ',
+            'ι', 'ί', 'ϊ', 'ΐ', 'υ', 'ύ', 'ϋ', 'ΰ',
+            'β', 'γ', 'δ', 'ζ', 'λ', 'μ', 'ν', 'ρ',
         ];
         $diphthongs = ['γγ' => 'ng', 'γξ' => 'nx', 'γχ' => 'nch', 'ου' => 'ou', 'ού' => 'ou'];
         $doubles = ['θ' => 'th', 'χ' => 'ch', 'ψ' => 'ps'];
         $singles = [
-            'α' => 'a', 'ά' => 'a', 'β' => 'v', 'γ' => 'g', 'δ' => 'd', 'ε' => 'e', 'έ' => 'e', 'ζ' => 'z', 'η' => 'i',
-            'ή' => 'i', 'ι' => 'i', 'ί' => 'i', 'ϊ' => 'i', 'ΐ' => 'i', 'κ' => 'k', 'λ' => 'l', 'μ' => 'm', 'ν' => 'n',
-            'ξ' => 'x', 'ο' => 'o', 'ό' => 'o', 'π' => 'p', 'ρ' => 'r', 'σ' => 's', 'ς' => 's', 'τ' => 't', 'υ' => 'y',
-            'ύ' => 'y', 'ϋ' => 'y', 'ΰ' => 'y', 'φ' => 'f', 'ω' => 'o', 'ώ' => 'o'
+            'α' => 'a', 'ά' => 'a',
+            'β' => 'v',
+            'γ' => 'g',
+            'δ' => 'd',
+            'ε' => 'e', 'έ' => 'e',
+            'ζ' => 'z',
+            'η' => 'i', 'ή' => 'i',
+            # θ in doubles
+            'ι' => 'i', 'ί' => 'i', 'ϊ' => 'i', 'ΐ' => 'i',
+            'κ' => 'k',
+            'λ' => 'l',
+            'μ' => 'm',
+            'ν' => 'n',
+            'ξ' => 'x',
+            'ο' => 'o', 'ό' => 'o',
+            'π' => 'p',
+            'ρ' => 'r',
+            'σ' => 's', 'ς' => 's',
+            'τ' => 't',
+            'υ' => 'y', 'ύ' => 'y', 'ϋ' => 'y', 'ΰ' => 'y',
+            'φ' => 'f',
+            # χ in doubles
+            # ψ in doubles
+            'ω' => 'o', 'ώ' => 'o',
         ];
         $out = '';
         $l = mb_strlen($in);
@@ -80,11 +104,10 @@ class Slug
                 # diphthong υ rule
                 $t = $singles[mb_strtolower($c0)];
                 $out .= mb_strtoupper($c0) == $c0 ? mb_strtoupper(mb_substr($t, 0, 1)) : mb_substr($t, 0, 1);
-                if (in_array(mb_strtolower($c2), $diph_vita)) {
+                if (in_array(mb_strtolower($c2), $diph_vita))
                     $out .= mb_strtoupper($c1) == $c1 ? mb_strtoupper('v') : 'v';
-                } else {
+                else
                     $out .= mb_strtoupper($c1) == $c1 ? mb_strtoupper('f') : 'f';
-                }
                 $i += 2;
             } elseif (array_key_exists(mb_strtolower($c0 . $c1), $diphthongs)) {
                 # diphthongs rule
@@ -111,7 +134,7 @@ class Slug
                 $i += 1;
             }
         }
-        
+        $out = preg_replace("/[^a-z0-9-\s]+/i", "", $out);
         return $out;
     }
 }

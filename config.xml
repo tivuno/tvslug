@@ -2,7 +2,7 @@
 <module>
     <name>tvslug</name>
     <displayName><![CDATA[Greeklish slug]]></displayName>
-    <version><![CDATA[1.0.3]]></version>
+    <version><![CDATA[1.0.4]]></version>
     <description><![CDATA[It creates greeklish slugs for the content in your project.]]></description>
     <author><![CDATA[tivuno.com]]></author>
     <tab><![CDATA[administration]]></tab>
