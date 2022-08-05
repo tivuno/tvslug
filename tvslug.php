@@ -17,7 +17,7 @@ class Tvslug extends Module
     {
         $this->name = 'tvslug';
         $this->tab = 'administration';
-        $this->version = '1.0.4';
+        $this->version = '1.0.5';
         $this->author = 'tivuno.com';
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
         $this->bootstrap = true;
