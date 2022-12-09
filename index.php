@@ -1,9 +1,9 @@
 <?php
 /**
- * Slug module ”Nic”
+ * Greeklish module ”Nic”
  *
  * @author    Konstantinos A. Kogkalidis
- * @copyright 2018 - 2022 © tivuno PrestaShop specialists
+ * @copyright 2018 - 2023 © tivuno PrestaShop specialists
  * @license   Basic license | One license per (sub)domain
  */
 
