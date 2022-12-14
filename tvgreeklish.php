@@ -195,6 +195,8 @@ class Tvgreeklish extends Module
         if ($slug === true) {
             return self::toSlug($string);
         }
+        
+        return $string;
     }
     
     /**
