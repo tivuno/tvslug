@@ -2,9 +2,9 @@
 /**
  * Greeklish module ”Nic”
  *
- * @author    Konstantinos A. Kogkalidis
- * @copyright 2018 - 2023 © tivuno PrestaShop specialists
- * @license   Basic license | One license per (sub)domain
+ * @author    tivuno.com <hi@tivuno.com>
+ * @copyright 2018 - 2023 © tivuno.com
+ * @license   https://tivuno.com/blog/business-news/basic-license
  */
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

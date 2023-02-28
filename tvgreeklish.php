@@ -1,11 +1,10 @@
 <?php
-
 /**
  * Greeklish module ”Nic”
  *
- * @author    Konstantinos A. Kogkalidis
- * @copyright 2018 - 2023 © tivuno PrestaShop specialists
- * @license   Basic license | One license per (sub)domain
+ * @author    tivuno.com <hi@tivuno.com>
+ * @copyright 2018 - 2023 © tivuno.com
+ * @license   https://tivuno.com/blog/business-news/basic-license
  */
 class Tvgreeklish extends Module
 {
@@ -56,7 +55,7 @@ class Tvgreeklish extends Module
         '/[ηΗ][ὐὑὙὔὕὝῦὖὗὒὓὛὺυΥ]([θΘκΚξΞπΠσςΣτTφΡχΧψΨ]|\s|$)/u' => 'if$1',
         '/[ηΗ][υΥ]/u' => 'iu',
     ];
-    protected static $simplified = [
+    protected static $__simplified = [
         'before' => [
             // Diphthongs
             '/[αΑ][ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻὶιίΙΊ]/u' => 'e',
@@ -83,12 +82,12 @@ class Tvgreeklish extends Module
             '/[ὐὑὙὔὕὝῦὖὗὒὓὛὺῒῧυύϋΰΥΎΫῢΰῠῡὟῪῨῩ]/u' => 'i',
         ]
     ];
-    
+
     public function __construct() {
         $this->name = 'tvgreeklish';
         $this->tab = 'administration';
-        $this->version = '1.0.6';
-        $this->author = 'tivuno.com - PrestaShop specialists';
+        $this->version = '1.0.7';
+        $this->author = 'tivuno.com';
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
         $this->bootstrap = true;
         $this->displayName = $this->l('Greeklish module ”Nic”');
@@ -97,89 +96,106 @@ class Tvgreeklish extends Module
         );
         parent::__construct();
     }
-    
+
     public function install() {
-        return parent::install();// && $this->registerHooks();
+        return parent::install() && $this->registerHooks();
     }
-    
+
     private function registerHooks() {
         $hooks = ["actionCategoryAdd", "actionCategoryUpdate", "actionProductSave"];
         foreach ($hooks as $hook) {
             $this->registerHook($hook);
         }
-        
+
         return true;
     }
-    
+
     public function hookActionCategoryAdd($params) {
         $this->hookActionCategoryUpdate($params);
     }
-    
+
     public function hookActionCategoryUpdate($params) {
         $executed = self::$executed;
         if ($executed) {
             return;
         }
-        
+
         self::$executed = true;
         $category = $params['category'];
-        $submitted_name = Tools::getValue('category')['name'];
-        foreach ($submitted_name as $language_id => $name) {
+        foreach ($category->name as $language_id => $name) {
             if (array_key_exists($language_id, $category->link_rewrite)) {
-                $category->link_rewrite[$language_id] = pSQL(Slug::convert($name));
+                Db::getInstance()->update(
+                    'category_lang',
+                    [
+                        'link_rewrite' => pSQL(self::convert($name)),
+                    ],
+                    'id_category = ' . (int) $category->id . ' AND `id_lang` = '. (int) $language_id
+                );
             }
         }
-        $category->update();
     }
-    
+
     public function hookActionProductSave($params) {
         $executed = self::$executed;
         if ($executed) {
             return;
         }
-        
+
         self::$executed = true;
         $product = $params['product'];
         foreach ($product->name as $language_id => $name) {
             if (array_key_exists($language_id, $product->link_rewrite)) {
-                $product->link_rewrite[$language_id] = pSQL(Slug::convert($name));
+                Db::getInstance()->update(
+                    'product_lang',
+                    [
+                        'link_rewrite' => pSQL(self::convert($name)),
+                    ],
+                    'id_product = ' . (int) $product->id . ' AND `id_lang` = '. (int) $language_id
+                );
             }
         }
-        $product->save();
     }
-    
+
     public function hookDisplayImportCreationLanguageExtraFields() {
         return [ # One language per line?
-                 [
-                     'type' => 'radio',
-                     'label' => $this->l('Do you need the slug to be converted to greeklish?'),
-                     'name' => 'language_slug',
-                     'values' => [
-                         [
-                             'id' => 0,
-                             'value' => 0,
-                             'label' => $this->l('No conversion, every name is in plain english')
-                         ],
-                         [
-                             'id' => 1,
-                             'value' => 1,
-                             'label' => $this->l('Basic conversion from modern greek')
-                         ],
-                         [
-                             'id' => 2,
-                             'value' => 2,
-                             'label' => $this->l('Advanced conversion from ancient greek')
-                         ]
-                     ]
-                 ]
+            [
+                'type' => 'radio',
+                'label' => $this->l('Do you need the slug to be converted to greeklish?'),
+                'name' => 'language_slug',
+                'values' => [
+                    [
+                        'id' => 0,
+                        'value' => 0,
+                        'label' => $this->l('No conversion, every name is in plain english')
+                    ],
+                    [
+                        'id' => 1,
+                        'value' => 1,
+                        'label' => $this->l('Basic conversion from modern greek')
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 2,
+                        'label' => $this->l('Advanced conversion from ancient greek')
+                    ]
+                ]
+            ]
         ];
     }
-    
+
     public function hookActionAddImportLanguageSettings() {
         return ['slug'];
     }
-    
-    public static function convert(string $string, int $level = 0, bool $uppercase = false, $slug = false) {
+
+    /**
+     * @param string $string
+     * @param int $level
+     * @param bool $slug
+     * @param bool $uppercase
+     * @return string
+     */
+    public static function convert(string $string, int $level = 1, bool $slug = true, bool $uppercase = false,): string
+    {
         if ($level == 0) {
             $expressions = self::$basic;
         } elseif ($level == 1) {
@@ -190,23 +206,26 @@ class Tvgreeklish extends Module
         }
         $string = preg_replace(array_keys($expressions), array_values($expressions), $string);
         if ($uppercase === true) {
-            $string = mb_strtoupper($string, "UTF-8");
+            $string = mb_strtoupper($string, 'UTF-8');
+        } else {
+            $string = mb_strtolower($string, 'UTF-8');
         }
         if ($slug === true) {
             return self::toSlug($string);
         }
-        
+
         return $string;
     }
-    
+
     /**
      * @param string $string
      * @return string
      */
-    public static function toSlug(string $string) {
+    public static function toSlug(string $string): string
+    {
         $string = preg_replace('/[^\p{L}\p{N}\s]/u', '', $string);
-        $string = preg_replace("/[\s-]+/", " ", $string);
-        
-        return preg_replace("/[\s_]/", "-", $string);;
+        $string = preg_replace('/[\s-]+/', ' ', $string);
+
+        return preg_replace('/[\s_]/', '-', $string);;
     }
 }
