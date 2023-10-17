@@ -3,7 +3,7 @@
  * Greeklish module ”Nic”
  *
  * @author    tivuno.com <hi@tivuno.com>
- * @copyright 2018 - 2023 © tivuno.com
+ * @copyright 2018 - 2024 © tivuno.com
  * @license   https://tivuno.com/blog/business-news/basic-license
  */
 class Tvgreeklish extends Module
@@ -12,36 +12,36 @@ class Tvgreeklish extends Module
     protected static $basic = [
         // Special symbols
         '/["]/iu' => ' inches',
-        '/[ἀἁἈἉᾶἄἅἌἍἆἇἎἏἂἃἊἋᾳᾼᾴᾲᾀᾈᾁᾉᾷᾆᾎᾇᾏᾂᾊᾃᾋὰαάΑΆᾄᾅᾌᾍᾺᾰᾱᾸᾹ]/u' => 'a',
+        '/[ἀἁᾶἄἅἆἇἂἃᾳᾴᾲᾀᾁᾷᾆᾇᾂᾃὰαάᾄᾅᾰᾱἈἉἌἍἎἏἊἋᾼᾈᾉᾎᾏᾊᾋΑΆᾌᾍᾺᾸᾹ]/u' => 'a',
         '/[βΒ]/u' => 'v',
         '/[γΓ]/u' => 'g',
-        '/[δΔðÐ]/u' => 'd',
-        '/[ἐἑἘἙἔἕἜἝἒἓἚἛὲεέΕΈ]/u' => 'e',
+        '/[δΔ]/u' => 'd',
+        '/[ἐἑἔἕἒἓὲεέἘἙἜἝἚἛΕΈ]/u' => 'e',
         '/[ζΖ]/u' => 'z',
-        '/[ἠἡἨἩἤἥἬἭῆἦἧἮἯἢἣἪἫῃῌῄῂᾐᾑᾘᾙᾖᾗᾞᾟᾒᾚᾛὴηήΗΉᾓᾔᾕῇᾜᾝῊ]/u' => 'i',
+        '/[ἠἡἤἥῆἦἧἢἣῃῄῂᾐᾑᾖᾗᾒὴηήᾓᾔᾕῇἨἩἬἭἮἯἪἫῌᾘᾙᾞᾟᾚᾛΗΉᾜᾝῊ]/u' => 'i',
         '/[θΘ]/u' => 'th',
-        '/[ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻῒῗὶιίϊΐΙΊΪΐῐῑῚῘῙìÌíÍîÎïÏ]/u' => 'i',
+        '/[ἰἱἴἵῖἶἷἲἳῒῗὶιίϊΐΐῐῑἸἹἼἽἾἿἺἻΙΊΪῚῘῙΪ]/u' => 'i',
         '/[κΚ]/u' => 'k',
         '/[λΛ]/u' => 'l',
         '/[μΜ]/u' => 'm',
         '/[νΝ]/u' => 'n',
         '/[ξΞ]/u' => 'x',
-        '/[ὀὁὈὉὄὅὌὍὂὃὊὋὸοόΟΌῸ]/u' => 'o',
+        '/[ὀὁὄὅὂὃὸοόὈὉὌὍὊὋΟΌῸ]/u' => 'o',
         '/[πΠ]/u' => 'p',
         '/[ρΡ]/u' => 'r',
         '/[σςΣ]/u' => 's',
         '/[τΤ]/u' => 't',
-        '/[ὐὑὙὔὕὝῦὖὗὒὓὛὺῒῧυύϋΰΥΎΫῢΰῠῡὟῪῨῩ]/u' => 'y',
+        '/[ὐὑὔὕῦὖὗὒὓὺῧυύϋΰῢΰῠῡὙὝὛΥΎΫὟῪῨῩ]/u' => 'y',
         '/[φΦ]/iu' => 'f',
         '/[χΧ]/u' => 'ch',
         '/[ψΨ]/u' => 'ps',
-        '/[ὠὡὨὩὤὥὬὭῶὦὧὮὯὢὣὪὫῳῼᾠᾡᾨᾩᾤᾥᾬᾭᾦᾧᾮᾯᾢᾣᾪᾫὼωώῲῷῴ]/iu' => 'o',
+        '/[ὠὡὤὥῶὦὧὢὣῳᾠᾡᾤᾥᾦᾧᾢᾣὼωώῲῷῴὨὩὬὭὮὯὪὫῼᾨᾩᾬᾭᾮᾯᾪᾫ]/iu' => 'o',
         // International accents
         '/[áàȧâäǎăāãåąⱥấầắằǡǻǟẫẵảȁȃẩẳạḁậặæǽǣÁÀȦÂÄǍĂĀÃÅĄȺẤẦẮẰǠǺǞẪẴẢȀȂẨẲẠḀẬẶÆǼǢ]/iu' => 'a',
         '/[ḃƀɓḅḇƃḂɃƁḄḆƂ]/iu' => 'b',
-        '/[ćċĉčçȼḉƈĆĊĈČÇȻḈƇ]/iu' => 'c',
+        '/[ćċĉčçȼḉƈɔ̃ĆĊĈČÇȻḈƇ]/iu' => 'c',
         '/[ḋďḑđƌɗḍḓḏðǳǆḊĎḐĐƋƊḌḒḎÐǱǲǄǅ]/iu' => 'd',
-        '/[éèėêëěĕēẽęȩɇếềḗḕễḝẻȅȇểẹḙḛệÉÈĖÊËĚĔĒẼĘȨɆẾỀḖḔỄḜẺȄȆỂẸḘḚỆ]/iu' => 'e',
+        '/[éèėêëěĕēẽęȩɇếềḗḕễḝẻȅȇểẹḙḛệɛÉÈĖÊËĚĔĒẼĘȨɆẾỀḖḔỄḜẺȄȆỂẸḘḚỆƐ]/iu' => 'e',
         '/[ḟƒḞƑ℉]/iu' => 'f',
         '/[ǵġĝǧğḡģǥɠǴĠĜǦĞḠĢǤƓ]/iu' => 'g',
         '/[ḣĥḧȟḩħḥḫⱨḢĤḦȞḨĦḤḪⱧ]/iu' => 'h',
@@ -55,14 +55,14 @@ class Tvgreeklish extends Module
         '/[ṕṗᵽƥṔṖⱣƤ]/iu' => 'p',
         '/[ɋɊ]/iu' => 'q',
         '/[ŕṙřŗɍɽȑȓṛṟṝŔṘŘŖɌⱤȐȒṚṞṜ]/iu' => 'r',
-        '/[śṡŝšşṥṧṣșṩßŚṠŜŠŞṤṦṢȘṨẞ]/iu' => 's',
-        '/[ṫẗťţƭṭʈțṱṯⱦþŧṪŤŢƬṬƮȚṰṮȾÞŦ]/iu' => 't',
+        '/[śṡŝšşṥṧṣșṩßʂɕŚṠŜŠŞṤṦṢȘṨẞꟅ]/iu' => 's',
+        '/[ṫẗťţƭṭʈțṱṯⱦþŧt͡ṪŤŢƬṬƮȚṰṮȾÞŦT͡]/iu' => 't',
         '/[úùûüǔŭūũůųűʉǘǜǚṹǖṻủȕȗưụṳứừṷṵữửựÚÙÛÜǓŬŪŨŮŲŰɄǗǛǙṸǕṺỦȔȖƯỤṲỨỪṶṴỮỬỰ]/iu' => 'u',
         '/[ṽṿʋṼṾƲ]/iu' => 'v',
         '/[ẃẁẇŵẅẘẉⱳẂẀẆŴẄẈⱲ]/iu' => 'w',
         '/[ẋẍẊẌ]/iu' => 'x',
         '/[ýỳẏŷÿȳỹẙɏỷƴỵÝỲẎŶŸȲỸɎỶƳỴ]/iu' => 'y',
-        '/[źżẑžƶȥẓẕⱬŹŻẐŽƵȤẒẔⱫ]/iu' => 'z',
+        '/[źżẑžƶȥẓẕⱬʐŹŻẐŽƵȤẒẔⱫʐ]/iu' => 'z',
     ];
     protected static $diphthongs = [
         '/[αΑ][ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻὶιίΙΊ]/u' => 'ai',
@@ -83,8 +83,9 @@ class Tvgreeklish extends Module
         '/[γΓ][κΚ]/u' => 'gk',
         '/[ηΗ][ὐὑὙὔὕὝῦὖὗὒὓὛὺυΥ]([θΘκΚξΞπΠσςΣτTφΡχΧψΨ]|\s|$)/u' => 'if$1',
         '/[ηΗ][υΥ]/u' => 'iu',
+        '/[Ϊ][́]/u' => 'i', // Really rare case eg. Παΐσιος in uppercase
     ];
-    protected static $__simplified = [
+    protected static $simplified = [
         'before' => [
             // Diphthongs
             '/[αΑ][ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻὶιίΙΊ]/u' => 'e',
@@ -122,7 +123,7 @@ class Tvgreeklish extends Module
         $this->bootstrap = true;
         $this->displayName = $this->l('Greeklish module ”Nic”');
         $this->description = $this->l(
-            'It converts string from greek to latin characters for the content in your project.'
+            'It converts string from greek (either with accents or not) & accented latin to plain latin characters for the content in your project.'
         );
         parent::__construct();
     }
@@ -135,11 +136,16 @@ class Tvgreeklish extends Module
     private function registerHooks()
     {
         $hooks = [
-            'actionCategoryAdd',
-            'actionCategoryUpdate',
-            'actionProductSave',
-            'actionObjectSimpleBlogPostAddAfter',
-            'actionObjectSimpleBlogPostUpdateAfter',
+            'actionAddImportLanguageSettings',
+            'actionObjectCategoryAddBefore',
+            'actionObjectCategoryUpdateBefore',
+            'actionObjectProductAddBefore',
+            'actionObjectProductUpdateBefore',
+            'actionObjectSimpleBlogCategoryAddBefore',
+            'actionObjectSimpleBlogCategoryUpdateBefore',
+            'actionObjectSimpleBlogPostAddBefore',
+            'actionObjectSimpleBlogPostUpdateBefore',
+            'displayImportCreationLanguageExtraFields',
         ];
         foreach ($hooks as $hook) {
             $this->registerHook($hook);
@@ -148,58 +154,9 @@ class Tvgreeklish extends Module
         return true;
     }
 
-    public function hookActionCategoryAdd($params)
-    {
-        $this->hookActionCategoryUpdate($params);
-    }
-
-    public function hookActionCategoryUpdate($params)
-    {
-        $executed = self::$executed;
-        if ($executed) {
-            return;
-        }
-
-        self::$executed = true;
-        $category = $params['category'];
-        foreach ($category->name as $language_id => $name) {
-            if (array_key_exists($language_id, $category->link_rewrite)) {
-                Db::getInstance()->update(
-                    'category_lang',
-                    [
-                        'link_rewrite' => pSQL(self::convert($name)),
-                    ],
-                    'id_category = ' . (int) $category->id . ' AND `id_lang` = ' . (int) $language_id
-                );
-            }
-        }
-    }
-
-    public function hookActionProductSave($params)
-    {
-        $executed = self::$executed;
-        if ($executed) {
-            return;
-        }
-
-        self::$executed = true;
-        $product = $params['product'];
-        foreach ($product->name as $language_id => $name) {
-            if (array_key_exists($language_id, $product->link_rewrite)) {
-                Db::getInstance()->update(
-                    'product_lang',
-                    [
-                        'link_rewrite' => pSQL(self::convert($name)),
-                    ],
-                    'id_product = ' . (int) $product->id . ' AND `id_lang` = ' . (int) $language_id
-                );
-            }
-        }
-    }
-
     public function hookDisplayImportCreationLanguageExtraFields()
     {
-        return [ # One language per line?
+        return [
             [
                 'type' => 'radio',
                 'label' => $this->l('Do you need the slug to be converted to greeklish?'),
@@ -230,14 +187,64 @@ class Tvgreeklish extends Module
         return ['slug'];
     }
 
-    public function hookActionObjectSimpleBlogPostAddAfter($params)
+    public function hookActionObjectProductAddBefore(&$params)
+    {
+        self::setLinkRewrite($params);
+    }
+
+    public function hookActionObjectProductUpdateBefore(&$params)
+    {
+        self::setLinkRewrite($params);
+    }
+
+    public function hookActionObjectCategoryAddBefore(&$params)
+    {
+        self::setLinkRewrite($params);
+    }
+
+    public function hookActionObjectCategoryUpdateBefore(&$params)
+    {
+        self::setLinkRewrite($params);
+    }
+
+    public function hookActionObjectSimpleBlogCategoryAddBefore(&$params)
+    {
+        self::setLinkRewrite($params);
+    }
+
+    public function hookActionObjectSimpleBlogCategoryUpdateBefore(&$params)
+    {
+        self::setLinkRewrite($params);
+    }
+
+    public function hookActionObjectSimpleBlogPostAddBefore(&$params)
     {
         self::setSimpleBlogPostLinkRewrite($params);
     }
 
-    public function hookActionObjectSimpleBlogPostUpdateAfter($params)
+    public function hookActionObjectSimpleBlogPostUpdateBefore(&$params)
     {
         self::setSimpleBlogPostLinkRewrite($params);
+    }
+
+    // Compatible classes: Category, Product, SimpleBlog category
+    private static function setLinkRewrite($params)
+    {
+        $executed = self::$executed;
+        if ($executed) {
+            return;
+        }
+
+        self::$executed = true;
+        foreach (Language::getLanguages(false, false, true) as $lang_id) {
+            if (array_key_exists($lang_id, $params['object']->name)) {
+                $name = $params['object']->name[$lang_id];
+                if ($name === null) {
+                    $name = $params['object']->name[(int) Configuration::get('PS_LANG_DEFAULT')];
+                }
+                $params['object']->link_rewrite[$lang_id] = pSQL(self::convert($name));
+            }
+        }
     }
 
     private static function setSimpleBlogPostLinkRewrite($params)
@@ -248,16 +255,13 @@ class Tvgreeklish extends Module
         }
 
         self::$executed = true;
-        $obj = $params['object'];
         foreach (Language::getLanguages(false, false, true) as $lang_id) {
-            if (array_key_exists($lang_id, $obj->title)) {
-                Db::getInstance()->update(
-                    'simpleblog_post_lang',
-                    [
-                        'link_rewrite' => pSQL(self::convert($obj->title[$lang_id])),
-                    ],
-                    'id_product = ' . (int) $obj->id . ' AND `id_lang` = ' . (int) $lang_id
-                );
+            if (array_key_exists($lang_id, $params['object']->title)) {
+                $name = $params['object']->title[$lang_id];
+                if ($name === null) {
+                    $name = $params['object']->title[(int) Configuration::get('PS_LANG_DEFAULT')];
+                }
+                $params['object']->link_rewrite[$lang_id] = pSQL(self::convert($name));
             }
         }
     }
@@ -269,7 +273,7 @@ class Tvgreeklish extends Module
      * @param bool $uppercase
      * @return string
      */
-    public static function convert(string $string, int $level = 1, bool $slug = true, bool $uppercase = false,): string
+    public static function convert(string $string, int $level = 1, bool $slug = true, bool $uppercase = false)
     {
         if ($level == 0) {
             $expressions = self::$basic;
@@ -298,9 +302,13 @@ class Tvgreeklish extends Module
      */
     public static function toSlug(string $string): string
     {
-        $string = preg_replace('/[^\p{L}\p{N}\s]/u', '', $string);
-        $string = preg_replace('/[\s-]+/', ' ', $string);
+        // Replaces all spaces with hyphens.
+        $string = str_replace(' ', '-', $string);
 
-        return preg_replace('/[\s_]/', '-', $string);;
+        // Removes special chars.
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+
+        // Replaces multiple hyphens with single one.
+        return preg_replace('/-+/', '-', $string);
     }
 }
