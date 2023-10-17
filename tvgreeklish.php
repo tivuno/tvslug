@@ -296,19 +296,15 @@ class Tvgreeklish extends Module
         return $string;
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
     public static function toSlug(string $string): string
     {
-        // Replaces all spaces with hyphens.
+        // Replaces all spaces with hyphens
         $string = str_replace(' ', '-', $string);
 
-        // Removes special chars.
+        // Removes special chars
         $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
 
-        // Replaces multiple hyphens with single one.
+        // Replaces multiple hyphens with single one
         return preg_replace('/-+/', '-', $string);
     }
 }
