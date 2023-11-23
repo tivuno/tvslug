@@ -235,6 +235,8 @@ class Tvgreeklish extends Module
             return;
         }
 
+        return;
+
         self::$executed = true;
         foreach (Language::getLanguages(false, false, true) as $lang_id) {
             if (array_key_exists($lang_id, $params['object']->name)) {

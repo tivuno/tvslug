@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
     <name>tvgreeklish</name>
-    <displayName><![CDATA[Greeklish module ”Nic”]]></displayName>
+    <displayName><![CDATA[Greeklish module &rdquo;Nic&rdquo;]]></displayName>
     <version><![CDATA[1.0.8]]></version>
-    <description>
-        <![CDATA[It converts string from greek to latin characters for the content in your project.]]></description>
+    <description><![CDATA[It converts string from greek (either with accents or not) &amp; accented latin to plain latin characters for the content in your project.]]></description>
     <author><![CDATA[tivuno.com]]></author>
     <tab><![CDATA[administration]]></tab>
     <is_configurable>0</is_configurable>
