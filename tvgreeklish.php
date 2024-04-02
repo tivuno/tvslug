@@ -1,11 +1,15 @@
 <?php
 /**
- * Greeklish module ”Nic”
+ * Greeklish PrestaShop module - Nic
  *
  * @author    tivuno.com <hi@tivuno.com>
  * @copyright 2018 - 2024 © tivuno.com
  * @license   https://tivuno.com/blog/business-news/basic-license
  */
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
 class Tvgreeklish extends Module
 {
     public static $executed = false;
@@ -117,41 +121,25 @@ class Tvgreeklish extends Module
     {
         $this->name = 'tvgreeklish';
         $this->tab = 'administration';
-        $this->version = '1.0.8';
+        $this->version = '1.0.9';
         $this->author = 'tivuno.com';
-        $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = [
+            'min' => '1.7',
+            'max' => _PS_VERSION_,
+        ];
         $this->bootstrap = true;
-        $this->displayName = $this->l('Greeklish module ”Nic”');
+        $this->displayName = $this->l('Greeklish PrestaShop module - Nic');
         $this->description = $this->l(
-            'It converts string from greek (either with accents or not) & accented latin to plain latin characters for the content in your project.'
+            'It converts string from greek (either with accents or not) and accented latin to plain latin characters for the content in your project.'
         );
         parent::__construct();
     }
 
     public function install()
     {
-        return parent::install() && $this->registerHooks();
-    }
+        require_once _PS_MODULE_DIR_ . 'tvcore/tvcore.php';
 
-    private function registerHooks()
-    {
-        $hooks = [
-            'actionAddImportLanguageSettings',
-            'actionObjectCategoryAddBefore',
-            'actionObjectCategoryUpdateBefore',
-            'actionObjectProductAddBefore',
-            'actionObjectProductUpdateBefore',
-            'actionObjectSimpleBlogCategoryAddBefore',
-            'actionObjectSimpleBlogCategoryUpdateBefore',
-            'actionObjectSimpleBlogPostAddBefore',
-            'actionObjectSimpleBlogPostUpdateBefore',
-            'displayImportCreationLanguageExtraFields',
-        ];
-        foreach ($hooks as $hook) {
-            $this->registerHook($hook);
-        }
-
-        return true;
+        return parent::install() && Tvcore::registerHooks($this->name);
     }
 
     public function hookDisplayImportCreationLanguageExtraFields()
@@ -217,6 +205,11 @@ class Tvgreeklish extends Module
         self::setLinkRewrite($params);
     }
 
+    public function hookActionObjectMetaUpdateBefore(&$params)
+    {
+        self::setLinkRewrite($params);
+    }
+
     public function hookActionObjectSimpleBlogPostAddBefore(&$params)
     {
         self::setSimpleBlogPostLinkRewrite($params);
@@ -234,8 +227,6 @@ class Tvgreeklish extends Module
         if ($executed) {
             return;
         }
-
-        return;
 
         self::$executed = true;
         foreach (Language::getLanguages(false, false, true) as $lang_id) {
