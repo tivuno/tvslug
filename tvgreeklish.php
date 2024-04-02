@@ -121,7 +121,7 @@ class Tvgreeklish extends Module
     {
         $this->name = 'tvgreeklish';
         $this->tab = 'administration';
-        $this->version = '1.0.9';
+        $this->version = '1.1.0';
         $this->author = 'tivuno.com';
         $this->ps_versions_compliancy = [
             'min' => '1.7',
@@ -207,21 +207,20 @@ class Tvgreeklish extends Module
 
     public function hookActionObjectMetaUpdateBefore(&$params)
     {
-        self::setLinkRewrite($params);
+        self::setLinkRewrite($params, 'title', 'url_rewrite');
     }
 
     public function hookActionObjectSimpleBlogPostAddBefore(&$params)
     {
-        self::setSimpleBlogPostLinkRewrite($params);
+        self::setLinkRewrite($params, 'title');
     }
 
     public function hookActionObjectSimpleBlogPostUpdateBefore(&$params)
     {
-        self::setSimpleBlogPostLinkRewrite($params);
+        self::setLinkRewrite($params, 'title');
     }
 
-    // Compatible classes: Category, Product, SimpleBlog category
-    private static function setLinkRewrite($params)
+    private static function setLinkRewrite($params, $name_field = 'name', $link_rewrite_field = 'link_rewrite')
     {
         $executed = self::$executed;
         if ($executed) {
@@ -230,31 +229,12 @@ class Tvgreeklish extends Module
 
         self::$executed = true;
         foreach (Language::getLanguages(false, false, true) as $lang_id) {
-            if (array_key_exists($lang_id, $params['object']->name)) {
-                $name = $params['object']->name[$lang_id];
+            if (array_key_exists($lang_id, $params['object']->{$name_field})) {
+                $name = $params['object']->{$name_field}[$lang_id];
                 if ($name === null) {
-                    $name = $params['object']->name[(int) Configuration::get('PS_LANG_DEFAULT')];
+                    $name = $params['object']->{$name_field}[(int) Configuration::get('PS_LANG_DEFAULT')];
                 }
-                $params['object']->link_rewrite[$lang_id] = pSQL(self::convert($name));
-            }
-        }
-    }
-
-    private static function setSimpleBlogPostLinkRewrite($params)
-    {
-        $executed = self::$executed;
-        if ($executed) {
-            return;
-        }
-
-        self::$executed = true;
-        foreach (Language::getLanguages(false, false, true) as $lang_id) {
-            if (array_key_exists($lang_id, $params['object']->title)) {
-                $name = $params['object']->title[$lang_id];
-                if ($name === null) {
-                    $name = $params['object']->title[(int) Configuration::get('PS_LANG_DEFAULT')];
-                }
-                $params['object']->link_rewrite[$lang_id] = pSQL(self::convert($name));
+                $params['object']->{$link_rewrite_field}[$lang_id] = pSQL(self::convert($name));
             }
         }
     }
