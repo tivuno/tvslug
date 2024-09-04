@@ -228,6 +228,7 @@ class Tvgreeklish extends Module
         }
 
         self::$executed = true;
+        //Tvimport::debug($params['object']->name);
         foreach (Language::getLanguages(false, false, true) as $lang_id) {
             if (array_key_exists($lang_id, $params['object']->{$name_field})) {
                 $name = $params['object']->{$name_field}[$lang_id];
