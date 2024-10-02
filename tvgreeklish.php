@@ -1,7 +1,6 @@
 <?php
 /**
  * Greeklish PrestaShop module - Nic
- *
  * @author    tivuno.com <hi@tivuno.com>
  * @copyright 2018 - 2024 © tivuno.com
  * @license   https://tivuno.com/blog/business-news/basic-license
@@ -177,6 +176,7 @@ class Tvgreeklish extends Module
 
     public function hookActionObjectProductAddBefore(&$params)
     {
+        //Tvimport::debug($params);
         self::setLinkRewrite($params);
     }
 
@@ -222,12 +222,6 @@ class Tvgreeklish extends Module
 
     private static function setLinkRewrite($params, $name_field = 'name', $link_rewrite_field = 'link_rewrite')
     {
-        $executed = self::$executed;
-        if ($executed) {
-            return;
-        }
-
-        self::$executed = true;
         //Tvimport::debug($params['object']->name);
         foreach (Language::getLanguages(false, false, true) as $lang_id) {
             if (array_key_exists($lang_id, $params['object']->{$name_field})) {
