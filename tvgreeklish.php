@@ -1,9 +1,9 @@
 <?php
 /**
- * Greeklish PrestaShop module - Nic
+ * Greeklish PrestaShop module - Nick
  * @author    tivuno.com <hi@tivuno.com>
- * @copyright 2018 - 2024 © tivuno.com
- * @license   https://tivuno.com/blog/business-news/basic-license
+ * @copyright 2018 - 2025 © tivuno.com
+ * @license   https://tivuno.com/blog/nea-tis-epicheirisis/apli-adeia
  */
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -12,7 +12,7 @@ if (!defined('_PS_VERSION_')) {
 class Tvgreeklish extends Module
 {
     public static $executed = false;
-    protected static $basic = [
+    protected static array $basic = [
         // Special symbols
         '/["]/iu' => ' inches',
         '/[ἀἁᾶἄἅἆἇἂἃᾳᾴᾲᾀᾁᾷᾆᾇᾂᾃὰαάᾄᾅᾰᾱἈἉἌἍἎἏἊἋᾼᾈᾉᾎᾏᾊᾋΑΆᾌᾍᾺᾸᾹ]/u' => 'a',
@@ -67,7 +67,7 @@ class Tvgreeklish extends Module
         '/[ýỳẏŷÿȳỹẙɏỷƴỵÝỲẎŶŸȲỸɎỶƳỴ]/iu' => 'y',
         '/[źżẑžƶȥẓẕⱬʐŹŻẐŽƵȤẒẔⱫʐ]/iu' => 'z',
     ];
-    protected static $diphthongs = [
+    protected static array $diphthongs = [
         '/[αΑ][ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻὶιίΙΊ]/u' => 'ai',
         '/[οΟ][ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻὶιίΙΊ]/u' => 'oi',
         '/[Εε][ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻὶιίΙΊ]/u' => 'ei',
@@ -88,7 +88,7 @@ class Tvgreeklish extends Module
         '/[ηΗ][υΥ]/u' => 'iu',
         '/[Ϊ][́]/u' => 'i', // Really rare case eg. Παΐσιος in uppercase
     ];
-    protected static $simplified = [
+    protected static array $simplified = [
         'before' => [
             // Diphthongs
             '/[αΑ][ἰἱἸἹἴἵἼἽῖἶἷἾἿἲἳἺἻὶιίΙΊ]/u' => 'e',
@@ -127,7 +127,7 @@ class Tvgreeklish extends Module
             'max' => _PS_VERSION_,
         ];
         $this->bootstrap = true;
-        $this->displayName = $this->l('Greeklish PrestaShop module - Nic');
+        $this->displayName = $this->l('Greeklish PrestaShop module - Nick');
         $this->description = $this->l(
             'It converts string from greek (either with accents or not) and accented latin to plain latin characters for the content in your project.'
         );
@@ -141,7 +141,7 @@ class Tvgreeklish extends Module
         return parent::install() && Tvcore::registerHooks($this->name);
     }
 
-    public function hookDisplayImportCreationLanguageExtraFields()
+    public function hookDisplayAdminTvimportProfilesFormCreationLanguage()
     {
         return [
             [
@@ -169,14 +169,13 @@ class Tvgreeklish extends Module
         ];
     }
 
-    public function hookActionAddImportLanguageSettings()
+    public function hookactionModelTvimportProfileSettingsLanguageGet()
     {
         return ['slug'];
     }
 
     public function hookActionObjectProductAddBefore(&$params)
     {
-        //Tvimport::debug($params);
         self::setLinkRewrite($params);
     }
 
@@ -222,7 +221,6 @@ class Tvgreeklish extends Module
 
     private static function setLinkRewrite($params, $name_field = 'name', $link_rewrite_field = 'link_rewrite')
     {
-        //Tvimport::debug($params['object']->name);
         foreach (Language::getLanguages(false, false, true) as $lang_id) {
             if (array_key_exists($lang_id, $params['object']->{$name_field})) {
                 $name = $params['object']->{$name_field}[$lang_id];
